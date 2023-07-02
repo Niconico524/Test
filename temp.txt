@@ -1,0 +1,255 @@
+sudo 			
+sudo apt install git
+gsettings set org.gnome.desktop.interface enable-animations false #界面动画关闭
+git clone https:#github.com/nondanee/Unclouded.git
+ls-l #当前目录所有文件
+ls -l /home #特定目录下的文件 ls 后可加多个地址一起列出
+
+ls -al ~ #~表示home地址
+ll 
+cal #日历
+data #日期
+bc #计算器 quit返回
+#连按两下tab补全,还可以补全所有以此开头的文件名
+#ctrl d 退出米命令行模式
+#shift+pageup 上滚
+
+date --help  #具体命令help
+whatis date #另一个简略的help
+apropos date  #help
+man date  # man  ---manual  pageup/down
+info date #enter 进入节点 u返回 q退出
+
+
+man 1 man
+man 7 man
+
+nano text.txt
+
+ps -aux #看进程
+exit #注销当前账号
+sync #将内存里的数据写入硬盘(关机前记得做)
+su - #变成root权限
+shutdown #关机,默认一分钟以后关机
+
+systemctl reboot
+systemctl poweroff #本质上是systemctl的命令
+chgrp #修改文件用户组
+chown #修改文件拥有着 chown nick /test/testing
+chmod #修改文件的权限chmod 600 txt.txt rwx对应421
+
+uname -r#查看内核版本
+uname -r #查看操作系统架构
+pwd #显示当前目录
+pwd -P#显示链接后的正确目录
+mkdir #新建一个目录
+mkdir -m #权限创建 mkdir -m 711 test2
+mkdir -p #递归创建目录 mkdir -p test1/test2/test3
+rmdir #删除一个空目录
+rm -r #删除所有空或非空 rm -r test/
+rm -i #删除前问一下  rm -i bashrc* *是通配符号，删除所有开头为bashrc的文件
+cd ~nick #使用者的home目录
+cd .. #回到上一层
+cd - #回到刚才的目录
+
+echo $PATH #显示哪些目录是path
+
+mv #移动文件 mv /bin/ls /root mv 也可以直接改名
+
+cp	#复制文件
+cp -a #连权限一同复制
+cp -R #递归复制目录及子目录
+
+PATH="${PATH}:/root"
+
+touch #建立空文件
+basename #获取文件名
+dirname #获取目录名
+
+
+cat #查看文件内容 cat -n 打印行号
+nl -b a#类似
+more#可慢慢下翻
+less #既可上翻又可以下翻，十分的好用
+head
+tail #数据截取
+od #读非文本文件
+;代表连续命令的执行
+umask -S #查看默认权限
+chattr #配置文件隐藏属性
+chattr +i #保护文件，不能被删除，改名 -i恢复
+chattr +a #只能增加，不能删除或修改 -a
+lsattr #显示文件隐藏属性
+file #查看文件是文本还是二进制
+which #查找执行文件
+whereis #比较快
+locate #比较快_nice
+
+df -h #查看磁盘使用量 -h 以GB形式显示
+du #查看目录所占大小
+du -sm #列出总量，以MB
+ln #硬链接
+ln -s # 建立一个符号链接 source target
+gdisk
+fdisk #磁盘分区
+
+文件压缩命令
+###########
+
+###########
+less /home/nick/.bash_history #查看之前的命令
+alias #重命名，类似于宏
+alias lm='ls -al'
+type #是否是内置命令
+ctrl+u #删除命令
+
+变量
+echo $HOME
+echo $MAIL
+myname=VBird
+
+export PATH #变成环境变量
+unset myname #取消变量
+cd /lib/modules/`uname -r`/kernel #先进行单反引号内的操作
+
+name=VBird
+echo $name
+myname="$name its me"
+
+ls -ld `locate crontab`
+work="~nick/桌面/"
+cd $work
+env #列出所有的环境变量
+declare -i number=$RANDOM*10/32768
+
+.bashrc不会因为关闭bash取消
+locale -a #显示所有语系
+read atest #用户输入变量内容
+read -p "pls key in your name" atest
+
+declare -i sum=100+200+300
+summ=100+200+300
+#也可以声明数组
+ulimit
+switch
+echo ${path#/*local/bin:} ##表示从最前面向右删除最短的,*是通配符,最短的意思是从左向右匹配到就删
+echo ${path##/*:}
+echo ${path%:*bin} #%表示从后向前删,最短的那个
+echo ${path%%:*bin}  #最长的那个
+echo ${path/sbin/SBIN}#替换 #中间是旧内容
+echo ${path#sbin/SBIN}#替换 #中间是旧内容
+clear #清除屏幕上的信息
+history -a #新增历史写入，然后可以再次手动history
+history 5 #显示最近的5个命令
+!110 #执行编号为110的命令
+!command #执行最近的开头为command的命令
+!!执行上个命令
+
+ll / > ~/rootfile  #>写入命令,存在就覆盖。不存在新建
+ll / >> ~/rootfile #存在增量输入
+find /home -name .bashrc >list_right2 2>list_error #正确的存进list_right2,错误的
+find /home -name .bashrc 2> /dev/null #/dev/null 吃掉所有导向这个设备的信息
+find /home -name .bashrc &>list #正确的错误的都写入文件
+find /home -name .bashrc >list 2>&1 #等价
+
+
+stty #设施按键
+cat > catfile <~/.bashrc #相当于cp
+cat >catfile << "eof" #输入eof结束
+ls /tmp/abc && touch /tmp/abc/hehe #&&第一个命令正确才会执行第二个命令
+ls /tmp/abc/ ||mkdir /tmp/abc #第一个命令不正确，则执行第二个命令
+ls /tmp/abc/ ||mkdir /tmp/abc&& touch /tmp/abc/hehe
+ls -al /etc |less # |管道命令，后一个命令接着处理上一个命令的输出
+echo ${PATH} | cut -d ':' -f 3,5 # -d 后面的相当于split切片，-f后面相当于索引
+export |cut -c 12-22 # -c 对字符个数区间做处理,每行都一样
+export |cut -c 12-
+
+last | cut -d ' ' -f 1 //仅保留每行的第一个字段
+last | grep 'root' #出现root的就显示 -n 顺便输出行号 m m
+last | grep -v 'root' #-v 反向选择，不出现
+last | grep -v 'nick'|cut -d ' ' -f 1
+cat /etc/passwd |sort #
+last | cut -d ' ' -f1 |sort |uniq #重复的唯一
+last | cut -d ' ' -f1 |sort |uniq -c # unique -c 计数
+cat /etc/passwd |wc #统计行数，字数，字符数 -l只有行数ca
+
+ls -l \home | tee last.list | less #抄送一份到last.list里
+last | tr '[a-z]' '[A-Z]' #所有小写字符变成大写字符
+cat /etc/passwd |tr -d ':' #删除':'
+cat /etc/man_db.conf |col -x|cat -A| less
+col-x #把tab换成等长的空格
+join #比对后把两个文件贴在一起
+paste #直接把两个文件的同一行粘在一起
+expand #tab转数字
+cd /tmp; split -b 300k /etc/services services;ll -k services* #-b按大小划分，bkm，-l 以行数划分
+cd /tmp; split -l 30 /etc/services services;ll -k services //按行划分
+cat services* >>serviceback //数据流重定向输入新文件
+cut -d ':' -f 1 /etc/passwd |head -n 3| xargs -n 1 id #-n 每次给多少个参数，相当于一个loop，不给出错
+find /usr/sbin -perm/7000 |xargs ls -l
+
+sudo apt install vim //安装vim
+编写shell
+mkdir bin;cd bin
+
+贝利等式，两个相距很远的粒子可以互相影响
+
+vi /bin/welcome.txt #i,o,a进入编辑模式,esc退出暂存 再按:wq保存退出,:wq!强制
+
+vi /bin/welcome.txt
+cat /bin/welcome.txt |less
+
+cd /tmp/vitest
+
+vim /etc/services
+
+http://linux.vbird.org/linux_basic/0310vi/hosts
+
+
+nick@Nick-PC:~$ showname.sh
+showname.sh：未找到命令
+nick@Nick-PC:~$ cat showname.sh
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+read -p "please import your first name" firstname
+read -p "please import your last name" lastname
+echo -e "\nYour full name is: ${firstname}" ${lastname}
+
+nick@Nick-PC:~$ bash showname.sh
+
+source multiplying.sh  #一直在父进程里跑
+test -e /nick //测试一个东西在不在
+test -e /nick && echo "exist" || echo "not exist"
+
+
+nick@Nick-PC:~$ vim how_paras.sh
+nick@Nick-PC:~$ sh how_paras.sh 
+The script name is ==>how_paras.sh
+para num is==>0
+your whole para is ==>''
+first para is ==>
+
+sh -n 不要执行脚本，仅检查语法的问题
+
+git
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
